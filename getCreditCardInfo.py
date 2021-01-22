@@ -74,7 +74,7 @@ while True:
 	print('EXP: ' + getEXP)
 
 	with open(filename, 'a') as f:
-		f.write(getCardNumber + ', ' + getName + ', ' + getAddress.replace(",","") + ', ' + getCountry + ', ' + getCVV + ', ' + getEXP + '\n\n')
+		f.write(getCardNumber + ', ' + getName + ', ' + getAddress.replace(",","") + ', ' + getCountry.replace(",","") + ', ' + getCVV + ', ' + getEXP + '\n\n')
 
 	time.sleep(1)
 	print("\nCredit Card Information from " + getName + " successfuly stolen.\n")
