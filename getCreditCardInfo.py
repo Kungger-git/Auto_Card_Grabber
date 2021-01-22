@@ -1,5 +1,3 @@
-# Program Made By Matthew Gabriel Millar
-
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from pathlib import Path
@@ -30,8 +28,8 @@ def insertData():
 
 	for result in myResults: print(result)
 
-PATH = "/Users/mattbecute/Downloads/chromedriver"
-driver = webdriver.Chrome(PATH)
+PATH = "C:/Users/jimfe/Documents/msedgedriver.exe"
+driver = webdriver.Edge(PATH)
 
 driver.get("https://cardgenerator.io/mastercard-credit-card-generator/")
 
@@ -76,12 +74,10 @@ while True:
 	print('EXP: ' + getEXP)
 
 	with open(filename, 'a') as f:
-		f.write(getCardNumber + ', ' + getName + ', ' + getAddress + ', ' + getCountry + ', ' + getCVV + ', ' + getEXP + '\n\n')
+		f.write(getCardNumber + ', ' + getName + ', ' + getAddress.replace(",","") + ', ' + getCountry + ', ' + getCVV + ', ' + getEXP + '\n\n')
 
 	time.sleep(1)
 	print("\nCredit Card Information from " + getName + " successfuly stolen.\n")
 
 	f.close()
 	insertData()
-
-	driver.quit()
