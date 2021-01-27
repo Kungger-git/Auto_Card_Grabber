@@ -24,12 +24,18 @@ def insertData():
     mySQL.commit()
     print(myCursor.rowcount, 'was inserted')
 
-PATH = []
-os.chdir('/')
-for root, dirs, files in os.walk(os.getcwd()):
-    if 'msedgedriver.exe' in files:
-        PATH.append(os.path.join(root, 'msedgedriver.exe'))
-driver = webdriver.Edge(PATH)
+
+def find_driver():
+    PATH = []
+    os.chdir('/')
+    for root, dirs, files in os.walk(os.getcwd()):
+        if 'msedgedriver.exe' in files:
+            PATH.append(os.path.join(root, 'msedgedriver.exe'))
+            for the_driver in PATH:
+                return the_driver
+
+
+driver = webdriver.Edge(find_driver())
 
 driver.get("https://cardgenerator.io/mastercard-credit-card-generator/")
 
