@@ -1,6 +1,6 @@
 from selenium import webdriver
 from pathlib import Path
-import time, random, countries
+import time, random, countries, os
 import mysql.connector as connectSQL
 
 
@@ -21,16 +21,14 @@ def insertData():
     ]
 
     myCursor.executemany(sql, values)
-    myCursor.execute('SELECT * FROM Users')
-    myResults = myCursor.fetchall()
     mySQL.commit()
     print(myCursor.rowcount, 'was inserted')
 
-    for result in myResults:
-        print(result)
-
-
-PATH = "C:/Users/jimfe/Documents/msedgedriver.exe"
+PATH = []
+os.chdir('/')
+for root, dirs, files in os.walk(os.getcwd()):
+    if 'msedgedriver.exe' in files:
+        PATH.append(os.path.join(root, 'msedgedriver.exe'))
 driver = webdriver.Edge(PATH)
 
 driver.get("https://cardgenerator.io/mastercard-credit-card-generator/")
@@ -63,12 +61,11 @@ while True:
     getCVV = driver.find_element_by_xpath('//*[@id="card_cvv_id"]').text
     getEXP = driver.find_element_by_xpath('//*[@id="card_exp_id"]').text
 
-    filename = "CreditCards.csv"
     try:
-        if Path(filename).exists():
+        if Path('CreditCards.csv').exists():
             print('File Exists, proceeding to data collection.\n\n')
-    except FileNotFoundError:
-        print('File could not be opened.')
+    except FileNotFoundError as ioerr:
+        print('File could not be found. ', ioerr)
 
     print('Card Number: ' + getCardNumber)
     print('Name: ' + getName)
@@ -77,7 +74,7 @@ while True:
     print('CVV: ' + getCVV)
     print('EXP: ' + getEXP)
 
-    with open(filename, 'a') as f:
+    with open('CreditCards.csv', 'a') as f:
         f.write(getCardNumber + ', ' + getName + ', ' + getAddress.replace(",", "") +
                 ', ' + getCountry.replace(",", "") + ', ' + getCVV + ', ' + getEXP + '\n\n')
 
